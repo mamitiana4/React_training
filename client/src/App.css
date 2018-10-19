@@ -1,0 +1,42 @@
+img, video, .nameFiles{
+    width : 50%
+}
+.images{
+    display: flex ;
+    justify-content: space-between;
+}
+.videos {
+    display: flex;
+    justify-content: space-between;
+}
+.files {
+    display: flex;
+    flex-direction: column
+}
+.displayFilesContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.box{
+    flex-basis: 30%
+}
+.listContainer{
+    border-bottom: 1px solid gainsboro ;
+}
+.listContainer:hover{
+    cursor: pointer ;
+}
+ul{
+    list-style: none ;
+    margin:0px ;
+    padding: 0px
+}
+.menuContent{
+    display: flex ;
+    justify-content: space-between ;
+    padding-top: 20px ;
+    border-bottom: 1px solid #0090ff
+}
+.project-title{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
