@@ -1,8 +1,8 @@
-const express = require('express') ;
-const mongoose = require('mongoose') ;
+const express = require('express');
+const mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
-const jwt = require('jsonwebtoken') ;
+const jwt = require('jsonwebtoken');
 var crypto = require('crypto');
 var multer = require('multer');
 var GridFsStorage = require('multer-gridfs-storage');
@@ -12,9 +12,9 @@ var methodOverride = require('method-override')
 
 //var urlencodedParser = bodyParser.urlencoded({ extended: false }) ;
 
-const app = express() ;
+const app = express();
 
-const port = 5000 ;
+const port = 5000;
 
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
@@ -23,7 +23,7 @@ const mongoURI = 'mongodb://localhost/uploads';
 
 const conn = mongoose.createConnection(mongoURI);
 const conn1 = mongoose.connect(mongoURI);
-var db = mongoose.connection ;
+var db = mongoose.connection;
 
 var gfs;
 conn.once('open', () => {
@@ -37,24 +37,24 @@ conn.once('open', () => {
 
 //create storage engine
 var storage = new GridFsStorage({
-    url: mongoURI ,
+    url: mongoURI,
     file: (req, file) => {
-        console.log(file) ;
+        console.log(file);
         return new Promise((resolve, reject) => {
             /* crypto.randomBytes(16, (err, buf) => {
                 if (err) {
                     return reject(err);
                 } */
-                const filename = file.originalname;
+            const filename = file.originalname;
 
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'uploads'
-                };
-                resolve(fileInfo);
-           //});
+            const fileInfo = {
+                filename: filename,
+                bucketName: 'uploads'
+            };
+            resolve(fileInfo);
+            //});
         });
-    } 
+    }
 });
 
 const upload = multer({
@@ -93,7 +93,7 @@ app.get('/files', (req, res) => {
 
         // file exist
         return res.json(files);
-    }) 
+    })
 });
 
 // get /file/fileName
@@ -111,7 +111,7 @@ app.get('/files/:filename', (req, res) => {
 
         // file exist
         return res.json(file);
-    }) 
+    })
 });
 
 //get /image/imagename
@@ -136,7 +136,7 @@ app.get('/image/:filename', (req, res) => {
                 err: 'Not an image'
             });
         }
-    }) 
+    })
 });
 
 app.get('/video/:filename', (req, res) => {
@@ -159,7 +159,7 @@ app.get('/video/:filename', (req, res) => {
                 err: 'Not a video'
             });
         }
-    }) 
+    })
 });
 
 //with express-fileupload
@@ -169,17 +169,17 @@ app.get('/video/:filename', (req, res) => {
 
 app.post('/upload', upload.single('file'), (req, res) => {
     //res.json({file: req.file});
-    console.log('id -------> ',req.file.id) ;
+    console.log('id -------> ', req.file.id);
     res.redirect('/userPage');
 });
 
 
-var User = require('./client/src/models/user') ;
+var User = require('./client/src/models/user');
 
-app.get('/users',(req,res)=>{
-    User.getUsers((err,users)=>{
-        if(err) throw err ;
-        res.json(users) ;
+app.get('/users', (req, res) => {
+    User.getUsers((err, users) => {
+        if (err) throw err;
+        res.json(users);
     })
 })
 
@@ -229,7 +229,7 @@ app.post('/createUser', (req, res) => {
         res.json(user);
         console.log('user created: ',user) ;
     }) */
-}) ;
+});
 
 app.post('/logIn', (req, res) => {
     //console.log(req.body) ;
@@ -239,19 +239,24 @@ app.post('/logIn', (req, res) => {
         email: req.body.email,
         password: req.body.password
     }, (err, user) => {
-        if(err)throw err ;
-        if(!user){
+        if (err) throw err;
+        if (!user) {
             console.log('tsy mety mintsy');
-        }else{
+        } else {
             /* res.json({
                 user
             }); */
-            jwt.sign({user}, 'secretKey', (err, token) => {
-                res.json({token}) ;
-               console.log('token --> ', token);
+            jwt.sign({
+                user
+            }, 'secretKey', (err, token) => {
+                res.json({
+                    token
+                });
+                console.log('token --> ', token);
+                console.log('user:', token.split('.')[1]);
             });
             console.log('user connected: ', user);
-            
+
         }
     });
 })
