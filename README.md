@@ -1,6 +1,6 @@
 # React_training
 
-###clone the repo
+###clone the repository
 
 ###cd to the folder
 
