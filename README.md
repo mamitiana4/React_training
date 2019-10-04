@@ -2,6 +2,6 @@
 
 ###clone the repository
 
-###cd to the folder
+### When you'r done navigate to the ' React_training ' folder
 
 ###npm install
